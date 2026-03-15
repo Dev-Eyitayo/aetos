@@ -88,7 +88,6 @@ function FieldInput({
 function CheckRow({
   label,
   checked,
-  onChange,
   isDark,
 }: {
   label: string

@@ -79,7 +79,7 @@ function FieldInput({
 }
 
 function CheckRow({
-  label, checked, onChange, isDark, small = false,
+  label, checked, isDark, small = false,
 }: {
   label: string; checked: boolean; onChange: () => void
   isDark: boolean; small?: boolean
