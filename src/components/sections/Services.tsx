@@ -5,7 +5,7 @@ import { useTheme } from '../../hooks/useTheme'
 
 const services = [
   {
-    id: 'web',
+    id: 'webs',
     icon: Globe,
     label: 'Web Development',
     description: 'Scalable, performant web applications built with modern frameworks.',
