@@ -25,7 +25,6 @@ import {
   Send,
   BadgeCheck,
   Sparkles,
-  Database,
   LineChart,
   Server,
   Megaphone,
@@ -487,7 +486,7 @@ function InternshipPanel({
             candidates.
           </p>
           <div className="flex flex-col gap-3">
-            {applicationStages.map(({ Icon, stage, title, desc }) => (
+            {applicationStages.map(({ stage, title, desc }) => (
               <div key={stage} className="flex gap-3 items-start">
                 {/* Stage number */}
                 <div className="flex flex-col items-center shrink-0">
