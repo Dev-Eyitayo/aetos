@@ -1,108 +1,34 @@
-// ── Navigation ───────────────────────────────────────────────────────────────
-export interface NavItem {
-  label: string
-  href: string
-}
+// Add/merge these into your existing types.ts
 
-// ── Stats ────────────────────────────────────────────────────────────────────
-export interface Stat {
-  value: string
-  label: string
-  description: string
-}
-
-// ── Projects / Works ─────────────────────────────────────────────────────────
 export interface TeamMember {
-  name: string
-  avatar?: string
+  name: string;
 }
 
 export interface TeamGroup {
-  role: string
-  members: TeamMember[]
+  role: string;
+  members: TeamMember[];
 }
 
 export interface ProjectDetails {
-  category: string
-  timeTaken: string
-  startDate: string
-  completedDate: string
-  technologies: string[]        // icon slugs or names
-  teamGroups: TeamGroup[]
-  methodsUsed: string[]
+  category: string;
+  timeTaken: string;
+  startDate: string;
+  completedDate: string;
+  technologies: string[];
+  teamGroups: TeamGroup[];
+  methodsUsed: string[];
+  features?: string[]; // ← new: optional feature highlights
 }
 
 export interface Project {
-  id: string
-  title: string
-  tags: string[]                // e.g. ['Fintech', 'Mobile App Design & Development']
-  description: string
-  heroGradient: string          // CSS gradient string
-  logoBg?: string
-  logoText?: string
-  logoEmoji?: string
-  accentColor: string
-  details?: ProjectDetails
-}
-
-// ── Services ─────────────────────────────────────────────────────────────────
-export interface Service {
-  id: string
-  icon: string
-  title: string
-  description?: string
-}
-
-// ── Why Choose Us ────────────────────────────────────────────────────────────
-export interface ChooseReason {
-  icon: string
-  title: string
-  description: string
-}
-
-// ── Testimonials ─────────────────────────────────────────────────────────────
-export interface Testimonial {
-  id: string
-  quote: string
-  author: string
-  role: string
-  avatar?: string
-  platform?: 'twitter' | 'linkedin' | 'instagram'
-}
-
-// ── FAQ ──────────────────────────────────────────────────────────────────────
-export interface FAQItem {
-  id: string
-  question: string
-  answer: string
-}
-
-// ── Partners ─────────────────────────────────────────────────────────────────
-export interface Partner {
-  id: string
-  name: string
-  logo: string
-}
-
-// ── Contact Form ─────────────────────────────────────────────────────────────
-export interface ContactForm {
-  name: string
-  email: string
-  message: string
-  service?: string
-}
-// ── Careers ──────────────────────────────────────────────────────────────────
-export interface InternshipTrack {
-  id: string
-  icon: string
-  title: string
-  subtitle?: string
-}
-
-export interface HireRole {
-  id: string
-  title: string
-  type: string
-  location: string
-  tags: string[]
+  id: string;
+  title: string;
+  tags: string[];
+  description: string;
+  heroGradient: string;
+  image?: string; // ← new: public folder path e.g. '/images/projects/bords.jpg'
+  logoText: string;
+  accentColor: string;
+  link?: string;
+  details?: ProjectDetails;
 }
