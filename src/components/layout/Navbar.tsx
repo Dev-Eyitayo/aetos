@@ -80,7 +80,7 @@ export default function Navbar() {
               <img
                 src="/logo.jpeg"
                 alt="Aetos"
-                className="h-15 w-auto rounded-3xl object-contain"
+                className="h-8 w-auto rounded-3xl object-contain"
               />
             </Link>
 
