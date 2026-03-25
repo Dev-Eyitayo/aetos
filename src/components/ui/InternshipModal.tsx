@@ -515,7 +515,7 @@ export default function InternshipModal() {
                     </p>
                     <button
                       onClick={closeModalById}
-                      className="mt-2 px-8 py-3.5 rounded-xl bg-brand text-black font-display font-bold text-sm hover:bg-[#5fcc00] transition-colors"
+                      className="mt-2 px-8 py-3.5 rounded-xl bg-brand text-black font-display font-bold text-sm hover:bg-brand-green-dim transition-colors"
                     >
                       Done
                     </button>
