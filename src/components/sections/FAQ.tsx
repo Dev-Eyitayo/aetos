@@ -69,7 +69,7 @@ export default function FAQ() {
   return (
     <section
       ref={ref}
-      className={`section-pad ${isDark ? "bg-[#0a0a0a]" : "bg-[#f8f8f6]"}`}
+      className={`section-pad ${isDark ? "bg-[#0a0a0a]" : "bg-light-card"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}

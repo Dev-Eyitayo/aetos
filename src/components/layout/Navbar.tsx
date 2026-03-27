@@ -113,7 +113,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className={`fixed inset-0 z-[49] pt-24 ${isDark ? "bg-[#0a0a0a]" : "bg-white"}`}
+            className={`fixed inset-0 z-49 pt-24 ${isDark ? "bg-[#0a0a0a]" : "bg-white"}`}
           >
             <nav className="flex flex-col p-6 gap-2">
               {navItems.map((item, i) => (

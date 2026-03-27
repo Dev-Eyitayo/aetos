@@ -91,8 +91,8 @@ function Tag({ label, isDark }: { label: string; isDark: boolean }) {
     <span
       className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-body font-medium border ${
         isDark
-          ? "border-[#2a2a2a] bg-[#1a1a1a] text-[#a0a0a0]"
-          : "border-[#d8d8d8] bg-[#f0f0f0] text-[#555555]"
+          ? "border-[#2a2a2a] bg-dark-border-subtle text-dark-text-secondary"
+          : "border-[#d8d8d8] bg-[#f0f0f0] text-dark-text-muted"
       }`}
     >
       <span
@@ -140,7 +140,7 @@ function ProjectModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-6"
+        className="fixed inset-0 z-200 flex items-end sm:items-center justify-center p-0 sm:p-6"
         style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(6px)" }}
         onClick={onClose}
       >
