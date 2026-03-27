@@ -19,10 +19,9 @@ export default function Hero() {
         isDark ? "bg-[#0a0a0a]" : "bg-light-bg"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 lg:py-0">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full py-12 sm:py-16 lg:py-0">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-6 items-center min-h-[calc(100vh-4rem)]">
-          {/* Text */}
-          <div className="flex flex-col gap-6 lg:gap-8">
+          <div className="flex flex-col gap-5 lg:gap-8">
             <motion.h1
               {...fadeUp(0.2)}
               className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight"
@@ -44,11 +43,11 @@ export default function Hero() {
 
             <motion.div
               {...fadeUp(0.45)}
-              className="flex flex-wrap items-center gap-3"
+              className="flex items-center gap-3"
             >
               <button
                 onClick={openModal}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-gray-500 font-display font-bold text-sm  transition-all duration-200 group"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-3.5 rounded-full bg-white text-gray-500 font-display font-bold text-sm transition-all duration-200 group whitespace-nowrap"
               >
                 Get Started
                 <ArrowRight
@@ -58,29 +57,25 @@ export default function Hero() {
               </button>
               <button
                 onClick={openModal}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-subtle text-primary font-display  bg-gray-900font-semibold text-sm hover:border-brand/50 hover:text-brand transition-all duration-200"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-3.5 rounded-full border border-subtle text-primary font-display font-semibold text-sm hover:border-brand/50 hover:text-brand transition-all duration-200 whitespace-nowrap"
               >
                 Free Consultation
               </button>
             </motion.div>
           </div>
 
-          {/* Hero image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92}}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex justify-center lg:justify-end"
           >
             <div className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg">
-              <div
-              >
-                <img
-                  src="/hero.png"
-                  alt="Hero"
-                  className="w-full h-100 md:h-155 object-cover object-top"
-                />
-              </div>
+              <img
+                src="/hero.png"
+                alt="Hero"
+                className="w-full h-100 md:h-155 object-cover object-top"
+              />
             </div>
           </motion.div>
         </div>
