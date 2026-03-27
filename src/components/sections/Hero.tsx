@@ -15,7 +15,7 @@ export default function Hero() {
 
   return (
     <section
-      className={`relative min-h-screen flex items-center overflow-hidden md:pt-16 ${
+      className={`relative min-h-screen flex items-center overflow-hidden pt-16 ${
         isDark ? "bg-[#0a0a0a]" : "bg-light-bg"
       }`}
     >
