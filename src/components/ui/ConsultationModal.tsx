@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, ArrowRight, Check } from 'lucide-react'
 import { useModal } from '../../hooks/useModal'
 import { useTheme } from '../../hooks/useTheme'
+import { useFirebaseSubmit } from '../../hooks/useFirebaseSubmit'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface FormState {
@@ -49,6 +50,7 @@ function FieldInput({
   onChange,
   hint,
   isDark,
+  required = false,
 }: {
   label: string
   type?: string
@@ -57,17 +59,20 @@ function FieldInput({
   onChange: (v: string) => void
   hint?: string
   isDark: boolean
+  required?: boolean
 }) {
   const [focused, setFocused] = useState(false)
   return (
     <div className="flex flex-col gap-1.5 flex-1 min-w-0">
       <label className="font-body text-xs font-medium" style={{ color: isDark ? '#888' : '#666' }}>
         {label}
+        {required && <span className="text-brand ml-0.5">*</span>}
       </label>
       <input
         type={type}
         placeholder={placeholder}
         value={value}
+        required={required}
         onChange={e => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -88,15 +93,18 @@ function FieldInput({
 function CheckRow({
   label,
   checked,
+  onChange,
   isDark,
 }: {
   label: string
   checked: boolean
-  onChange: (v: boolean) => void
+  onChange: () => void 
   isDark: boolean
 }) {
   return (
     <label
+      // Add the onClick handler here
+      onClick={onChange}
       className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-150 select-none"
       style={{
         background: checked
@@ -150,6 +158,7 @@ function SectionCard({
 export default function ConsultationModal() {
   const { isOpen, closeModal } = useModal()
   const { isDark } = useTheme()
+  const { submit, loading } = useFirebaseSubmit('consultation_requests')
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const [form, setForm] = useState<FormState>({
@@ -160,7 +169,6 @@ export default function ConsultationModal() {
     timeline: 'Immediately',
   })
   const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading]     = useState(false)
 
   // Close on Escape
   useEffect(() => {
@@ -174,7 +182,6 @@ export default function ConsultationModal() {
     if (!isOpen) {
       setTimeout(() => {
         setSubmitted(false)
-        setLoading(false)
         setForm({
           name: '', email: '', phone: '', company: '',
           services: ['New Product / Software Development'],
@@ -200,12 +207,27 @@ export default function ConsultationModal() {
   const setBudget   = (b: string) => setForm(prev => ({ ...prev, budget: b }))
   const setTimeline = (t: string) => setForm(prev => ({ ...prev, timeline: t }))
 
+  // Validation
+  const canSubmit = form.name.trim() && form.email.trim() && form.company.trim() && form.projectDescription.trim() && form.services.length > 0
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    await new Promise(r => setTimeout(r, 1400))
-    setLoading(false)
-    setSubmitted(true)
+    if (!canSubmit) return
+    try {
+      await submit({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        company: form.company,
+        services: form.services,
+        projectDescription: form.projectDescription,
+        budget: form.budget,
+        timeline: form.timeline,
+      })
+      setSubmitted(true)
+    } catch (err) {
+      console.error('Failed to submit form:', err)
+    }
   }
 
   return (
@@ -320,6 +342,7 @@ export default function ConsultationModal() {
                           value={form.name}
                           onChange={setField('name')}
                           isDark={isDark}
+                          required
                         />
                         <FieldInput
                           label="Email"
@@ -329,6 +352,7 @@ export default function ConsultationModal() {
                           onChange={setField('email')}
                           hint="We'll use this to respond"
                           isDark={isDark}
+                          required
                         />
                       </div>
                       <div className="flex flex-col sm:flex-row gap-4">
@@ -346,6 +370,7 @@ export default function ConsultationModal() {
                           value={form.company}
                           onChange={setField('company')}
                           isDark={isDark}
+                          required
                         />
                       </div>
                     </SectionCard>
@@ -354,6 +379,7 @@ export default function ConsultationModal() {
                     <SectionCard title="What Are You Reaching Out For?" isDark={isDark}>
                       <p className="text-xs font-body" style={{ color: isDark ? '#555' : '#aaa', marginTop: -8 }}>
                         Select one or more options
+                        <span className="text-brand ml-0.5">*</span>
                       </p>
                       <div className="flex flex-col gap-1">
                         {SERVICE_OPTIONS.map(s => (
@@ -373,10 +399,12 @@ export default function ConsultationModal() {
                       <div className="flex flex-col gap-1.5">
                         <label className="font-body text-xs font-medium" style={{ color: isDark ? '#888' : '#666' }}>
                           Briefly describe your project or need
+                          <span className="text-brand ml-0.5">*</span>
                         </label>
                         <textarea
                           placeholder="What are you trying to build or achieve?"
                           value={form.projectDescription}
+                          required
                           onChange={e => setField('projectDescription')(e.target.value)}
                           rows={6}
                           className="w-full rounded-xl px-4 py-3 text-sm font-body outline-none transition-all duration-200 resize-none"
@@ -442,15 +470,16 @@ export default function ConsultationModal() {
                     <div className="flex justify-center pt-2 pb-1">
                       <button
                         type="submit"
-                        disabled={loading || !form.name || !form.email}
+                        disabled={loading || !canSubmit}
                         className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl font-display font-bold text-sm transition-all duration-200 disabled:opacity-50 group"
                         style={{
                           background: isDark ? '#ffffff' : '#111111',
                           color: isDark ? '#000000' : '#ffffff',
                           border: 'none',
+                          cursor: canSubmit ? 'pointer' : 'not-allowed',
                         }}
-                        onMouseEnter={e => { e.currentTarget.style.background = 'var(--color-brand-green)'; e.currentTarget.style.color = '#000' }}
-                        onMouseLeave={e => { e.currentTarget.style.background = isDark ? '#ffffff' : '#111111'; e.currentTarget.style.color = isDark ? '#000' : '#fff' }}
+                        onMouseEnter={e => { if (canSubmit) { e.currentTarget.style.background = 'var(--color-brand-green)'; e.currentTarget.style.color = '#000' } }}
+                        onMouseLeave={e => { if (canSubmit) { e.currentTarget.style.background = isDark ? '#ffffff' : '#111111'; e.currentTarget.style.color = isDark ? '#000' : '#fff' } }}
                       >
                         {loading ? (
                           <>
