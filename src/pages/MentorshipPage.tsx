@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   ArrowRight,
@@ -175,13 +175,15 @@ const applicationStages = [
 const testimonials = [
   {
     quote:
-      "Before Aetos, I struggled to get past first-round interviews. After 90 days, I had two job offers and the confidence to negotiate. The real project experience made all the difference.",
-    name: "Frontend Developer",
+      "Being part of Aetos Talent Factory Mentorship has been a defining step in my career as a UI/UX designer.Beyond the projects, the community creates valuable networking opportunities that have connected me with like-minded professionals, mentors, and collaborators who genuinely support one another’s progress.The constructive feedback, accountability, and peer support I received built my confidence and strengthened my skills, helping me grow faster than I would have on my own.Through the community, I have met amazing people, gained valuable opportunities, and continue to benefit from the exposure and connections that keep advancing my growth within the tech ecosystem.",
+    name: "Oresanwo A. Oluwatosin",
+    skill: "UI/UX Designer",
   },
   {
     quote:
-      "Working in a structured team taught me more in 3 months than a year of solo learning. I can now explain my work, defend my decisions, and contribute meaningfully to product builds.",
-    name: "Product Manager",
+      "Years ago, I made a decision that quietly changed the trajectory of my career  joining Aetos Talent Factory Mentorship in 2023 as a Frontend Developer.What I didn't expect was how much of the growth would come not just from the technical side, but from the people around me. The community connected me with mentors, collaborators, and likeminded developers who actually show up for each other.The accountability, the real feedback, the late-night conversations about code and career all of it compounded into a version of me that builds with more confidence and thinks with more clarity.Two years in and I'm still gaining  new opportunities, deeper connections, and a place in a tech ecosystem that continues to push my growth forward.",
+    name: "Ochigbo Emmanuel",
+    skill: "Frontend Developer",
   },
 ];
 
@@ -306,6 +308,28 @@ export default function MentorshipPage() {
   const { isDark } = useTheme();
   const { openModalById } = useModal();
 
+  const text =
+    "Build real products. Work in teams. Gain employment-ready skills.";
+
+  const [displayed, setDisplayed] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (index < text.length) {
+        setDisplayed((prev) => prev + text[index]);
+        setIndex((prev) => prev + 1);
+      } else {
+        setTimeout(() => {
+          setDisplayed("");
+          setIndex(0);
+        }, 1500);
+      }
+    }, 45);
+
+    return () => clearTimeout(timeout);
+  }, [index]);
+
   return (
     <>
       <div
@@ -379,7 +403,7 @@ export default function MentorshipPage() {
               className="flex justify-center mb-6"
             >
               <div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-display font-semibold text-primary"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xl font-display font-semibold text-primary"
                 style={{
                   background: isDark
                     ? "rgba(127,255,0,0.08)"
@@ -400,7 +424,7 @@ export default function MentorshipPage() {
               className="font-display font-bold text-center text-primary"
               style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.1 }}
             >
-              Aetos Talent Factory
+              Aetos talent factory mentorship
             </motion.h1>
 
             <motion.p
@@ -419,9 +443,10 @@ export default function MentorshipPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="font-display font-semibold text-sm text-center text-primary mt-3"
+              className="font-display font-semibold text-xl text-center text-primary mt-5"
             >
-              Build real products. Work in teams. Gain employment-ready skills.
+              {displayed}
+              <span className="animate-pulse">|</span>
             </motion.p>
 
             {/* CTA */}
@@ -635,7 +660,7 @@ export default function MentorshipPage() {
               competence.
             </p>
             <div className="grid sm:grid-cols-2 gap-3">
-              {testimonials.map(({ quote, name }) => (
+              {testimonials.map(({ quote, name, skill }) => (
                 <div
                   key={name}
                   className="p-4 rounded-xl"
@@ -651,6 +676,10 @@ export default function MentorshipPage() {
                   </p>
                   <p className="font-display font-semibold text-xs text-primary">
                     — {name}
+                  </p>
+
+                  <p className="font-display font-semibold text-xs text-primary">
+                    — {skill}
                   </p>
                 </div>
               ))}

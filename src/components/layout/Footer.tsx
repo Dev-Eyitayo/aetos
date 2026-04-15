@@ -9,13 +9,13 @@ const footerLinks = {
     { label: "Partners", href: "/#partners" },
   ],
   Services: [
-    { label: "Web Development", href: "/services/web" },
-    { label: "Mobile App Development", href: "/services/mobile" },
+    { label: "Web Development", href: "/contact" },
+    { label: "Mobile App Development", href: "/contact" },
     { label: "AI", href: "/services/ai" },
     { label: "QA testing", href: "/services/qa" },
-    { label: "Code Audit & penetration testing", href: "/services/audit" },
-    { label: "Cloud Computing (AWS)", href: "/services/cloud" },
-    { label: "Maintenance support", href: "/services/maintenance" },
+    { label: "Code Audit & penetration testing", href: "/contact" },
+    { label: "Cloud Computing (AWS)", href: "/contact" },
+    { label: "Maintenance support", href: "/contact" },
   ],
   Careers: [
     { label: "Internship", href: "/careers" },
@@ -24,8 +24,16 @@ const footerLinks = {
 };
 
 const socials = [
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/company/aetos-agency-technology/",
+    label: "LinkedIn",
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/aetosagency_atfm?igsh=MXhzc2VvdGV4NWwwaA==",
+    label: "Instagram",
+  },
   { icon: Twitter, href: "https://twitter.com", label: "Twitter / X" },
 ];
 
@@ -43,9 +51,11 @@ export default function Footer() {
         <div className="flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-6">
           {/* Logo */}
           <Link to="/" className="inline-block">
-            <span className="font-display text-3xl font-bold text-primary">
-              ae<span className="text-brand">tos</span>
-            </span>
+            <img
+              src="/logo.png"
+              alt="Aetos"
+              className="h-8 w-auto rounded-2xl object-contain"
+            />
           </Link>
 
           {/* Socials */}
@@ -79,7 +89,10 @@ export default function Footer() {
         {/* Mobile: stacked columns, centered */}
         <div className="flex flex-col items-center gap-8 md:hidden">
           {Object.entries(footerLinks).map(([section, links]) => (
-            <div key={section} className="flex flex-col items-center text-center">
+            <div
+              key={section}
+              className="flex flex-col items-center text-center"
+            >
               <h4 className="font-display font-semibold text-sm text-primary uppercase tracking-wider mb-3">
                 {section}
               </h4>
@@ -127,7 +140,9 @@ export default function Footer() {
                         {link.label}
                       </Link>
                       {i < links.length - 1 && (
-                        <span className="text-muted text-xs select-none">•</span>
+                        <span className="text-muted text-xs select-none">
+                          •
+                        </span>
                       )}
                     </span>
                   ))}
