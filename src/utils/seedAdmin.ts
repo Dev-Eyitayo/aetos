@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth'
-import { setDoc, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
+import { setDoc, doc, getDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 
 interface AdminDocument {

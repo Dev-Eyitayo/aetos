@@ -12,9 +12,10 @@ export default function AdminLogin() {
   const [seedLoading, setSeedLoading] = useState(false)
   const [seedError, setSeedError] = useState<string | null>(null)
   const [seedSuccess, setSeedSuccess] = useState(false)
-  const [showSetup, setShowSetup] = useState(false)
+  const showSetup = false // For now, we can toggle this on to show the setup guide tab if needed
   const { signIn, user } = useAuth()
   const navigate = useNavigate()
+  
 
   // Auto-redirect if already logged in
   useEffect(() => {
@@ -86,7 +87,9 @@ export default function AdminLogin() {
     }
   }
 
-  const [isAdmin, setAdmin] = useState(false)
+  const [ isAdmin, setAdmin] = useState(false)
+
+  console.log(isAdmin)
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4 py-12">

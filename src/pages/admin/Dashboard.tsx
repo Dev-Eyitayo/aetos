@@ -15,15 +15,8 @@ import {
 import { useAuth } from '../../hooks/useAuth'
 import { useTheme } from '../../hooks/useTheme'
 import { 
-  collection, 
-  query, 
-  where, 
+  collection,  
   getDocs, 
-  Timestamp,
-  Query,
-  QueryConstraint,
-  QuerySnapshot,
-  DocumentData,
 } from 'firebase/firestore'
 import { db } from '../../lib/firebase'
 
