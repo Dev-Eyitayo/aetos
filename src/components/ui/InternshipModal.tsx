@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Check } from "lucide-react";
 import { useModal } from "../../hooks/useModal";
 import { useTheme } from "../../hooks/useTheme";
+import { useFirebaseSubmit } from "../../hooks/useFirebaseSubmit";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface MentorshipForm {
@@ -181,6 +182,7 @@ function FieldSelect({
       </label>
       <select
         value={value}
+        required={required}
         onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-xl px-4 py-3 text-sm font-body outline-none transition-all duration-200 appearance-none cursor-pointer"
         style={{
@@ -368,11 +370,11 @@ function SectionCard({
 export default function InternshipModal() {
   const { activeModal, closeModalById } = useModal();
   const { isDark } = useTheme();
+  const { submit, loading } = useFirebaseSubmit('mentorship_applications');
   const isOpen = activeModal === "internship";
 
   const [form, setForm] = useState<MentorshipForm>(EMPTY);
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const set = (key: keyof MentorshipForm) => (v: string) =>
     setForm((prev) => ({ ...prev, [key]: v }));
@@ -391,7 +393,6 @@ export default function InternshipModal() {
     if (!isOpen) {
       setTimeout(() => {
         setSubmitted(false);
-        setLoading(false);
         setForm(EMPTY);
       }, 400);
     }
@@ -416,10 +417,27 @@ export default function InternshipModal() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1400));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      await submit({
+        fullName: form.fullName,
+        email: form.email,
+        phone: form.phone,
+        location: form.location,
+        ageRange: form.ageRange,
+        gender: form.gender,
+        currentStatus: form.currentStatus,
+        careerPath: form.careerPath,
+        whyJoin: form.whyJoin,
+        problemSolving: form.problemSolving,
+        successVision: form.successVision,
+        weeklyCommitment: form.weeklyCommitment,
+        priorProgram: form.priorProgram,
+        commitmentFee: form.commitmentFee,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Failed to submit form:', err);
+    }
   };
 
   return (
@@ -619,15 +637,6 @@ export default function InternshipModal() {
                           isDark={isDark}
                           required
                         />
-                        <div className="flex flex-col gap-1.5 sm:col-span-1">
-                          <label
-                            className="font-body text-xs font-medium"
-                            style={{ color: isDark ? "#888" : "#666" }}
-                          >
-                            What career path are you in?
-                            <span className="text-brand ml-0.5">*</span>
-                          </label>
-                        </div>
                       </div>
                       {/* Career path as checklist — full width */}
                       <div>

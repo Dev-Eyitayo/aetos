@@ -14,6 +14,7 @@ import {
   ChevronDown,
 } from 'lucide-react'
 import { useTheme } from '../hooks/useTheme'
+import { useFirebaseSubmit } from '../hooks/useFirebaseSubmit'
 import CTABanner from '../components/sections/CTABanner'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
@@ -133,11 +134,15 @@ function Input({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-body text-xs font-medium text-secondary">{label}</label>
+      <label className="font-body text-xs font-medium text-secondary">
+        {label}
+        {required && <span className="text-brand ml-0.5">*</span>}
+      </label>
       <input
         type={type}
         placeholder={placeholder}
         value={value}
+        required={required}
         onChange={e => onChange(e.target.value)}
         required={required}
         className="w-full rounded-lg px-4 py-3 text-sm font-body text-primary placeholder:text-muted outline-none transition-all duration-200"
@@ -158,20 +163,26 @@ function SelectInput({
   onChange,
   options,
   isDark,
+  required = false,
 }: {
   label: string
   value: string
   onChange: (v: string) => void
   options: string[]
   isDark: boolean
+  required?: boolean
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-body text-xs font-medium text-secondary">{label}</label>
+      <label className="font-body text-xs font-medium text-secondary">
+        {label}
+        {required && <span className="text-brand ml-0.5">*</span>}
+      </label>
       <div className="relative">
         <select
           value={value}
           onChange={e => onChange(e.target.value)}
+          required={required}
           className="w-full appearance-none rounded-lg px-4 py-3 text-sm font-body outline-none transition-all duration-200 cursor-pointer"
           style={{
             background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
@@ -196,19 +207,25 @@ function Textarea({
   value,
   onChange,
   isDark,
+  required = false,
 }: {
   label: string
   placeholder: string
   value: string
   onChange: (v: string) => void
   isDark: boolean
+  required?: boolean
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="font-body text-xs font-medium text-secondary">{label}</label>
+      <label className="font-body text-xs font-medium text-secondary">
+        {label}
+        {required && <span className="text-brand ml-0.5">*</span>}
+      </label>
       <textarea
         placeholder={placeholder}
         value={value}
+        required={required}
         onChange={e => onChange(e.target.value)}
         rows={5}
         className="w-full rounded-lg px-4 py-3 text-sm font-body text-primary placeholder:text-muted outline-none transition-all duration-200 resize-none"
@@ -226,23 +243,40 @@ function Textarea({
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function ContactPage() {
   const { isDark } = useTheme()
+  const { submit, loading } = useFirebaseSubmit('contact_messages')
 
   // Form state
   const [form, setForm] = useState({
     name: '', email: '', phone: '', company: '', subject: '', message: '',
   })
   const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   const set = (key: keyof typeof form) => (v: string) =>
     setForm(prev => ({ ...prev, [key]: v }))
 
+  const canSubmit = form.name.trim() && form.email.trim() && form.phone.trim() && form.company.trim() && form.subject.trim() && form.message.trim()
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setSubmitted(true)
+    if (!canSubmit) return
+    try {
+      await submit({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        company: form.company,
+        subject: form.subject,
+        message: form.message,
+      })
+      setSubmitted(true)
+      // Reset form after successful submission
+      setTimeout(() => {
+        setForm({ name: '', email: '', phone: '', company: '', subject: '', message: '' })
+        setSubmitted(false)
+      }, 3000)
+    } catch (err) {
+      console.error('Failed to submit form:', err)
+    }
   }
 
   // Refs for scroll animations
@@ -572,6 +606,7 @@ export default function ContactPage() {
                         value={form.phone}
                         onChange={set("phone")}
                         isDark={isDark}
+                        required
                       />
                     </div>
 
@@ -583,6 +618,7 @@ export default function ContactPage() {
                         value={form.company}
                         onChange={set("company")}
                         isDark={isDark}
+                        required
                       />
                       <SelectInput
                         label="Subject"
@@ -590,6 +626,7 @@ export default function ContactPage() {
                         onChange={set("subject")}
                         options={subjects}
                         isDark={isDark}
+                        required
                       />
                     </div>
 
@@ -600,16 +637,18 @@ export default function ContactPage() {
                       value={form.message}
                       onChange={set("message")}
                       isDark={isDark}
+                      required
                     />
 
                     {/* Submit */}
                     <div className="flex justify-center pt-2">
                       <button
                         type="submit"
-                        disabled={loading}
+                        disabled={loading || !canSubmit}
                         className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl font-display font-semibold text-sm text-primary hover:text-primary transition-all duration-200 disabled:opacity-60 group"
                         style={{
                           border: `1px solid ${isDark ? "#383838" : "#bbb"}`,
+                          cursor: canSubmit ? 'pointer' : 'not-allowed',
                         }}
                       >
                         {loading ? (
