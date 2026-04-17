@@ -21,36 +21,36 @@ import CTABanner from "../components/sections/CTABanner";
 const emailChannels = [
   {
     label: "For General Inquiries",
-    value: "info@company.com",
-    href: "mailto:info@company.com",
+    value: "software@aetos.com.ng",
+    href: "mailto:software@aetos.com.ng",
   },
   {
     label: "For Business Collaborations",
-    value: "partnerships@company.com",
-    href: "mailto:partnerships@company.com",
+    value: "software@aetos.com.ng",
+    href: "mailto:software@aetos.com.ng",
   },
   {
     label: "For Job Opportunities",
-    value: "careers@company.com",
-    href: "mailto:careers@company.com",
+    value: "software@aetos.com.ng",
+    href: "mailto:software@aetos.com.ng",
   },
 ];
 
 const phoneChannels = [
-  { label: "General Enquiries", value: "+234 812 345 6789" },
-  { label: "Business Collaborations", value: "+234 812 345 6789" },
-  { label: "Free Consultation", value: "+234 812 345 6789" },
+  { label: "General Enquiries", value: "0814 973 4622 " },
+  { label: "Business Collaborations", value: "0814 973 4622 " },
+  { label: "Free Consultation", value: "0814 973 4622 " },
 ];
 
 const offices = [
   {
-    city: "New York City",
-    address: "123 Main Street, Suite 456, New York, NY 10001",
+    city: "Ibadan Oyo state.",
+    address: "Ayaniyi street Oluyole Ext Ibadan Oyo state.",
     mapsUrl: "https://maps.google.com/?q=New+York+City",
   },
   {
-    city: "San Francisco",
-    address: "789 Tech Avenue, 10th Floor, San Francisco, CA 94105",
+    city: "Ibadan Oyo state.",
+    address: "Ayaniyi street Oluyole Ext Ibadan Oyo state.",
     mapsUrl: "https://maps.google.com/?q=San+Francisco+CA",
   },
 ];
@@ -68,9 +68,21 @@ const subjects = [
 ];
 
 const socials = [
-  { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { Icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-  { Icon: Twitter, href: "https://twitter.com", label: "X / Twitter" },
+  {
+    Icon: Linkedin,
+    href: "https://www.linkedin.com/company/aetos-agency-technology/",
+    label: "LinkedIn",
+  },
+  {
+    Icon: Instagram,
+    href: "https://www.instagram.com/aetosagency_atfm?igsh=MXhzc2VvdGV4NWwwaA==",
+    label: "Instagram",
+  },
+  {
+    Icon: Twitter,
+    href: "https://x.com/AetosTalent?t=Sj5mBgcHWhP2OQSLqEg74A&s=09",
+    label: "Twitter / X",
+  },
 ];
 
 // ── Reusable atoms ────────────────────────────────────────────────────────────

@@ -31,6 +31,7 @@ import {
 import { useTheme } from "../hooks/useTheme";
 import { useModal } from "../hooks/useModal";
 import CTABanner from "../components/sections/CTABanner";
+import { X } from "lucide-react";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -175,7 +176,7 @@ const applicationStages = [
 const testimonials = [
   {
     quote:
-      "Being part of Aetos Talent Factory Mentorship has been a defining step in my career as a UI/UX designer.Beyond the projects, the community creates valuable networking opportunities that have connected me with like-minded professionals, mentors, and collaborators who genuinely support one another’s progress.The constructive feedback, accountability, and peer support I received built my confidence and strengthened my skills, helping me grow faster than I would have on my own.Through the community, I have met amazing people, gained valuable opportunities, and continue to benefit from the exposure and connections that keep advancing my growth within the tech ecosystem.",
+      "Being part of Aetos Talent Factory Mentorship has been a defining step in my career as a UI/UX designer.Beyond the projects, the community creates valuable networking opportunities that have connected me with like-minded professionals, mentors, and collaborators who genuinely support one another's progress.The constructive feedback, accountability, and peer support I received built my confidence and strengthened my skills, helping me grow faster than I would have on my own.Through the community, I have met amazing people, gained valuable opportunities, and continue to benefit from the exposure and connections that keep advancing my growth within the tech ecosystem.",
     name: "Oresanwo A. Oluwatosin",
     skill: "UI/UX Designer",
   },
@@ -186,6 +187,207 @@ const testimonials = [
     skill: "Frontend Developer",
   },
 ];
+
+// ── Countdown Badge ───────────────────────────────────────────────────────────
+
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
+
+interface TimeLeft {
+  d: number;
+  h: number;
+  m: number;
+  s: number;
+  expired: boolean;
+}
+
+function CountdownBadge({ isDark }: { isDark: boolean }) {
+  const REGISTRATION_START = new Date("2026-04-15T00:00:00");
+  const REGISTRATION_END = new Date("2026-05-25T23:59:59");
+
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    d: 0,
+    h: 0,
+    m: 0,
+    s: 0,
+    expired: false,
+  });
+  const [visible, setVisible] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 300);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const tick = () => {
+      const now = Date.now();
+      const diff = REGISTRATION_END.getTime() - now;
+
+      if (diff <= 0) {
+        setTimeLeft({ d: 0, h: 0, m: 0, s: 0, expired: true });
+        return;
+      }
+
+      setTimeLeft({
+        d: Math.floor(diff / 86400000),
+        h: Math.floor((diff % 86400000) / 3600000),
+        m: Math.floor((diff % 3600000) / 60000),
+        s: Math.floor((diff % 60000) / 1000),
+        expired: false,
+      });
+    };
+
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const now = Date.now();
+  const hasStarted = now >= REGISTRATION_START.getTime();
+  const isOpen = hasStarted && !timeLeft.expired;
+
+  const units = [
+    { value: timeLeft.d, label: "Days" },
+    { value: timeLeft.h, label: "Hrs" },
+    { value: timeLeft.m, label: "Mins" },
+    { value: timeLeft.s, label: "Secs" },
+  ];
+
+  return (
+    <AnimatePresence>
+      {!dismissed && (
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.96 }}
+          animate={visible ? { opacity: 1, y: 0, scale: 1 } : {}}
+          exit={{ opacity: 0, y: -10, scale: 0.96 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="relative flex flex-col gap-2 px-4 py-3 rounded-2xl"
+          style={{
+            background: isDark
+              ? "rgba(8, 12, 4, 0.88)"
+              : "rgba(10, 18, 4, 0.84)",
+            border: "1px solid rgba(127,255,0,0.25)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            minWidth: 230,
+            boxShadow: "0 0 0 1px rgba(127,255,0,0.06) inset",
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setDismissed(true)}
+            className="absolute top-2 right-2 flex items-center justify-center w-5 h-5 rounded-full transition-colors"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              color: "rgba(255,255,255,0.4)",
+            }}
+            aria-label="Dismiss countdown"
+          >
+            <X size={10} />
+          </button>
+
+          {/* Status row */}
+          <div className="flex items-center gap-1.5 pr-5">
+            <span
+              className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
+              style={{
+                background: timeLeft.expired
+                  ? "#ff5555"
+                  : isOpen
+                    ? "#7fff00"
+                    : "#f5a623",
+                boxShadow: timeLeft.expired
+                  ? "0 0 6px #ff5555"
+                  : isOpen
+                    ? "0 0 6px rgba(127,255,0,0.7)"
+                    : "0 0 6px #f5a623",
+                animation: timeLeft.expired
+                  ? "none"
+                  : "cdPulse 1.8s ease-in-out infinite",
+              }}
+            />
+            <span
+              className="text-[10px] uppercase tracking-widest font-semibold"
+              style={{ color: "rgba(127,255,0,0.75)" }}
+            >
+              {timeLeft.expired
+                ? "Registration closed"
+                : !hasStarted
+                  ? "Registration opens soon"
+                  : "Registration closes in"}
+            </span>
+          </div>
+
+          {/* Countdown units */}
+          {!timeLeft.expired && (
+            <div className="flex items-center gap-1.5">
+              {units.map(({ value, label }, i) => (
+                <div key={label} className="flex items-center gap-1.5">
+                  <div
+                    className="flex flex-col items-center"
+                    style={{ minWidth: 46 }}
+                  >
+                    <span
+                      className="font-semibold leading-none tabular-nums"
+                      style={{
+                        fontSize: 26,
+                        color: "#ffffff",
+                        letterSpacing: "-0.5px",
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      {label === "Days" ? timeLeft.d : pad(value)}
+                    </span>
+                    <span
+                      className="uppercase mt-0.5"
+                      style={{
+                        fontSize: 9,
+                        letterSpacing: "0.08em",
+                        color: "rgba(255,255,255,0.38)",
+                      }}
+                    >
+                      {label}
+                    </span>
+                  </div>
+                  {i < 3 && (
+                    <span
+                      className="leading-none"
+                      style={{
+                        fontSize: 20,
+                        color: "rgba(127,255,0,0.35)",
+                        marginBottom: 10,
+                      }}
+                    >
+                      :
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Deadline date */}
+          <p
+            className="text-right"
+            style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}
+          >
+            15 Apr – 25 May 2026
+          </p>
+
+          <style>{`
+            @keyframes cdPulse {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.25; }
+            }
+          `}</style>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 // ── Shared atoms ──────────────────────────────────────────────────────────────
 
@@ -275,7 +477,6 @@ function StatsBar({ isDark }: { isDark: boolean }) {
       style={{
         borderTop: `1px solid ${isDark ? "#1e1e1e" : "#e0e0e0"}`,
         borderBottom: `1px solid ${isDark ? "#1e1e1e" : "#e0e0e0"}`,
-        // divideColor: isDark ? "#1e1e1e" : "#e0e0e0",
       }}
     >
       {stats.map(({ value, unit, label }) => (
@@ -392,6 +593,11 @@ export default function MentorshipPage() {
             >
               AETOS
             </span>
+          </div>
+
+          {/* ── Countdown Badge — top-right of hero ── */}
+          <div className="absolute top-23 right-4 sm:right-8 z-20">
+            <CountdownBadge isDark={isDark} />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -677,7 +883,6 @@ export default function MentorshipPage() {
                   <p className="font-display font-semibold text-xs text-primary">
                     — {name}
                   </p>
-
                   <p className="font-display font-semibold text-xs text-primary">
                     — {skill}
                   </p>
@@ -704,10 +909,10 @@ export default function MentorshipPage() {
             <p className="text-muted text-xs font-body">
               Questions? Email us at{" "}
               <a
-                href="mailto:hello@aetosfactory.com"
+                href="mailto:talent@aetos.com.ng"
                 className="text-primary underline underline-offset-2"
               >
-                hello@aetosfactory.com
+                talent@aetos.com.ng
               </a>
             </p>
           </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Menu } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 
 const navItems = [
@@ -38,32 +38,35 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center pt-4 px-4"
       >
-        {/* ── Mobile: Logo pill ── */}
+        {/* ── Mobile: Logo left + Menu icon right ── */}
         <div
-          className="md:hidden cursor-pointer"
-          onClick={() => setMenuOpen((prev) => !prev)}
+          className="md:hidden flex items-center justify-between w-full px-4 py-2 rounded-full"
+          style={{
+            background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
+          }}
         >
-          <div
-            className="flex items-center justify-center px-10 py-2 rounded-full"
-            style={{
-              background: isDark
-                ? "rgba(255,255,255,0.05)"
-                : "rgba(0,0,0,0.05)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
-            }}
+          <Link to="/" onClick={() => setMenuOpen(false)}>
+            <img
+              src="/logo.png"
+              alt="Aetos"
+              className="h-8 w-auto rounded-2xl object-contain"
+            />
+          </Link>
+
+          <button
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className="flex items-center justify-center p-1.5 rounded-full transition-colors"
+            aria-label="Toggle menu"
           >
             {menuOpen ? (
               <X size={22} className="text-primary" />
             ) : (
-              <img
-                src="/logo.png"
-                alt="Aetos"
-                className="h-8 w-auto rounded-2xl object-contain"
-              />
+              <Menu size={22} className="text-primary" />
             )}
-          </div>
+          </button>
         </div>
 
         {/* ── Desktop pill navbar ── */}
