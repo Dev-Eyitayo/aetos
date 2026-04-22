@@ -928,7 +928,9 @@ export default function MentorshipPage() {
         </div>
       </div>
 
-      <CountdownBadge isDark={isDark} />
+      <div className="md:hidden">
+        <CountdownBadge isDark={isDark} />
+      </div>
 
       <CTABanner />
     </>
