@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+// import { ArrowRight } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
-import { useModal } from "../../hooks/useModal";
+// import { useModal } from "../../hooks/useModal";
 
 export default function CTABanner() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const { isDark } = useTheme();
-  const { openModal } = useModal();
+  // const { openModal } = useModal();
 
   return (
     <section
@@ -80,7 +80,7 @@ export default function CTABanner() {
             Unlock Your Digital Potential Today
           </motion.p>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.4 }}
@@ -95,7 +95,7 @@ export default function CTABanner() {
                 className="group-hover:translate-x-1 transition-transform"
               />
             </button>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </div>
     </section>

@@ -29,8 +29,8 @@ export default function App() {
                 <Route path="projects" element={<ProjectsPage />} />
                 <Route path="projects/:id" element={<ProjectsPage />} />
                 <Route path="contact" element={<ContactPage />} />
-                <Route path="careers/mentorship" element={<MentorshipPage />} />
-                <Route path="careers/hire" element={<HirePage />} />
+                <Route path="enrol" element={<MentorshipPage />} />
+                <Route path="hire" element={<HirePage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
 

@@ -571,10 +571,10 @@ function InternshipPanel({
           <p className="text-muted text-xs font-body">
             Questions? Email us at{" "}
             <a
-              href="mailto:hello@aetosfactory.com"
+              href="mailto:talent@aetos.com.ng"
               className="text-brand underline underline-offset-2"
             >
-              hello@aetosfactory.com
+              talent@aetos.com.ng
             </a>
           </p>
         </div>

@@ -138,53 +138,53 @@ export const projects: Project[] = [
       methodsUsed: ["Agile Development", "User Research", "Usability Testing"],
     },
   },
-  {
-    id: "bords",
-    title: "Bords",
-    tags: ["Productivity", "Web App", "Developer Tools"],
-    description:
-      "Collaborative workspace built for developer teams — ideate together, assign tasks, track progress, and run live meetings all in one unified platform.",
-    heroGradient:
-      "linear-gradient(160deg, #0e0020 0%, #1a0040 30%, #3d0099 70%, #7c3aed 100%)",
-    image: "/bords.png",
-    logoText: "Bords",
-    accentColor: "#a78bfa",
-    details: {
-      category: "Web Application.",
-      timeTaken: "7 Months",
-      startDate: "February 1, 2024",
-      completedDate: "September 1, 2024",
-      technologies: ["Figma", "Next.js", "TypeScript", "Tailwind"],
-      teamGroups: [
-        {
-          role: "Web Developers",
-          members: [{ name: "Daniel Okafor" }, { name: "Tolu Adeyemi" }],
-        },
-        {
-          role: "UI UX Designer",
-          members: [{ name: "Chisom Eze" }],
-        },
-        {
-          role: "Project Manager",
-          members: [{ name: "Emeka Nwosu" }],
-        },
-      ],
-      methodsUsed: [
-        "Agile Development",
-        "Design Sprints",
-        "User Testing",
-        "Real-time Collaboration",
-      ],
-      features: [
-        "Ideation Boards",
-        "Task Assignment",
-        "Progress Tracker",
-        "Live Meetings",
-        "Team Chat",
-        "File Sharing",
-      ],
-    },
-  },
+  // {
+  //   id: "bords",
+  //   title: "Bords",
+  //   tags: ["Productivity", "Web App", "Developer Tools"],
+  //   description:
+  //     "Collaborative workspace built for developer teams — ideate together, assign tasks, track progress, and run live meetings all in one unified platform.",
+  //   heroGradient:
+  //     "linear-gradient(160deg, #0e0020 0%, #1a0040 30%, #3d0099 70%, #7c3aed 100%)",
+  //   image: "/bords.png",
+  //   logoText: "Bords",
+  //   accentColor: "#a78bfa",
+  //   details: {
+  //     category: "Web Application.",
+  //     timeTaken: "7 Months",
+  //     startDate: "February 1, 2024",
+  //     completedDate: "September 1, 2024",
+  //     technologies: ["Figma", "Next.js", "TypeScript", "Tailwind"],
+  //     teamGroups: [
+  //       {
+  //         role: "Web Developers",
+  //         members: [{ name: "Daniel Okafor" }, { name: "Tolu Adeyemi" }],
+  //       },
+  //       {
+  //         role: "UI UX Designer",
+  //         members: [{ name: "Chisom Eze" }],
+  //       },
+  //       {
+  //         role: "Project Manager",
+  //         members: [{ name: "Emeka Nwosu" }],
+  //       },
+  //     ],
+  //     methodsUsed: [
+  //       "Agile Development",
+  //       "Design Sprints",
+  //       "User Testing",
+  //       "Real-time Collaboration",
+  //     ],
+  //     features: [
+  //       "Ideation Boards",
+  //       "Task Assignment",
+  //       "Progress Tracker",
+  //       "Live Meetings",
+  //       "Team Chat",
+  //       "File Sharing",
+  //     ],
+  //   },
+  // },
   {
     id: "fixora",
     title: "Fixora",

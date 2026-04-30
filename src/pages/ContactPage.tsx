@@ -1,5 +1,5 @@
-import { useState, useRef, FormEvent } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useState, useRef, FormEvent } from "react";
+import { motion, useInView } from "framer-motion";
 // import { Link } from 'react-router-dom'
 import {
   Mail,
@@ -12,54 +12,78 @@ import {
   MessageCircle,
   Shield,
   ChevronDown,
-} from 'lucide-react'
-import { useTheme } from '../hooks/useTheme'
-import { useFirebaseSubmit } from '../hooks/useFirebaseSubmit'
-import CTABanner from '../components/sections/CTABanner'
+} from "lucide-react";
+import { useTheme } from "../hooks/useTheme";
+import { useFirebaseSubmit } from "../hooks/useFirebaseSubmit";
+import CTABanner from "../components/sections/CTABanner";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const emailChannels = [
-  { label: 'For General Inquiries',       value: 'info@company.com',         href: 'mailto:info@company.com'         },
-  { label: 'For Business Collaborations', value: 'partnerships@company.com', href: 'mailto:partnerships@company.com' },
-  { label: 'For Job Opportunities',       value: 'careers@company.com',      href: 'mailto:careers@company.com'      },
-]
+  {
+    label: "For General Inquiries",
+    value: "software@aetos.com.ng",
+    href: "mailto:software@aetos.com.ng",
+  },
+  {
+    label: "For Business Collaborations",
+    value: "software@aetos.com.ng",
+    href: "mailto:software@aetos.com.ng",
+  },
+  {
+    label: "For Job Opportunities",
+    value: "software@aetos.com.ng",
+    href: "mailto:software@aetos.com.ng",
+  },
+];
 
 const phoneChannels = [
-  { label: 'General Enquiries',       value: '+234 812 345 6789' },
-  { label: 'Business Collaborations', value: '+234 812 345 6789' },
-  { label: 'Free Consultation',       value: '+234 812 345 6789' },
-]
+  { label: "General Enquiries", value: "0814 973 4622 " },
+  { label: "Business Collaborations", value: "0814 973 4622 " },
+  { label: "Free Consultation", value: "0814 973 4622 " },
+];
 
 const offices = [
   {
-    city: 'New York City',
-    address: '123 Main Street, Suite 456, New York, NY 10001',
-    mapsUrl: 'https://maps.google.com/?q=New+York+City',
+    city: "Ibadan Oyo state.",
+    address: "Ayaniyi street Oluyole Ext Ibadan Oyo state.",
+    mapsUrl: "https://maps.google.com/?q=New+York+City",
   },
   {
-    city: 'San Francisco',
-    address: '789 Tech Avenue, 10th Floor, San Francisco, CA 94105',
-    mapsUrl: 'https://maps.google.com/?q=San+Francisco+CA',
+    city: "Ibadan Oyo state.",
+    address: "Ayaniyi street Oluyole Ext Ibadan Oyo state.",
+    mapsUrl: "https://maps.google.com/?q=San+Francisco+CA",
   },
-]
+];
 
 const subjects = [
-  'General Inquiry',
-  'Web Development',
-  'Mobile App Development',
-  'AI / ML Solutions',
-  'QA Testing',
-  'SEO Services',
-  'Partnership / Collaboration',
-  'Job Opportunity',
-  'Other',
-]
+  "General Inquiry",
+  "Web Development",
+  "Mobile App Development",
+  "AI / ML Solutions",
+  "QA Testing",
+  "SEO Services",
+  "Partnership / Collaboration",
+  "Job Opportunity",
+  "Other",
+];
 
 const socials = [
-  { Icon: Linkedin,  href: 'https://linkedin.com',  label: 'LinkedIn'  },
-  { Icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-  { Icon: Twitter,   href: 'https://twitter.com',   label: 'X / Twitter' },
-]
+  {
+    Icon: Linkedin,
+    href: "https://www.linkedin.com/company/aetos-agency-technology/",
+    label: "LinkedIn",
+  },
+  {
+    Icon: Instagram,
+    href: "https://www.instagram.com/aetosagency_atfm?igsh=MXhzc2VvdGV4NWwwaA==",
+    label: "Instagram",
+  },
+  {
+    Icon: Twitter,
+    href: "https://x.com/AetosTalent?t=Sj5mBgcHWhP2OQSLqEg74A&s=09",
+    label: "Twitter / X",
+  },
+];
 
 // ── Reusable atoms ────────────────────────────────────────────────────────────
 function SectionHeading({
@@ -68,10 +92,10 @@ function SectionHeading({
   inView,
   delay = 0,
 }: {
-  title: string
-  subtitle?: string
-  inView: boolean
-  delay?: number
+  title: string;
+  subtitle?: string;
+  inView: boolean;
+  delay?: number;
 }) {
   return (
     <motion.div
@@ -89,48 +113,48 @@ function SectionHeading({
         </p>
       )}
     </motion.div>
-  )
+  );
 }
 
 function Card({
   isDark,
   children,
-  className = '',
+  className = "",
 }: {
-  isDark: boolean
-  children: React.ReactNode
-  className?: string
+  isDark: boolean;
+  children: React.ReactNode;
+  className?: string;
 }) {
   return (
     <div
       className={`rounded-xl ${className}`}
       style={{
-        background: isDark ? '#111111' : '#ffffff',
-        border: `1px solid ${isDark ? '#1e1e1e' : '#e0e0e0'}`,
+        background: isDark ? "#111111" : "#ffffff",
+        border: `1px solid ${isDark ? "#1e1e1e" : "#e0e0e0"}`,
       }}
     >
       {children}
     </div>
-  )
+  );
 }
 
 // ── Input / Textarea ──────────────────────────────────────────────────────────
 function Input({
   label,
-  type = 'text',
+  type = "text",
   placeholder,
   value,
   onChange,
   isDark,
   required,
 }: {
-  label: string
-  type?: string
-  placeholder: string
-  value: string
-  onChange: (v: string) => void
-  isDark: boolean
-  required?: boolean
+  label: string;
+  type?: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+  isDark: boolean;
+  required?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -146,14 +170,18 @@ function Input({
         onChange={e => onChange(e.target.value)}
         className="w-full rounded-lg px-4 py-3 text-sm font-body text-primary placeholder:text-muted outline-none transition-all duration-200"
         style={{
-          background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
-          border: `1px solid ${isDark ? '#2a2a2a' : '#d8d8d8'}`,
+          background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)",
+          border: `1px solid ${isDark ? "#2a2a2a" : "#d8d8d8"}`,
         }}
-        onFocus={e => { e.currentTarget.style.borderColor = 'var(--color-brand-green)' }}
-        onBlur={e => { e.currentTarget.style.borderColor = isDark ? '#2a2a2a' : '#d8d8d8' }}
+        onFocus={(e) => {
+          e.currentTarget.style.borderColor = "var(--color-brand-green)";
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.borderColor = isDark ? "#2a2a2a" : "#d8d8d8";
+        }}
       />
     </div>
-  )
+  );
 }
 
 function SelectInput({
@@ -164,12 +192,12 @@ function SelectInput({
   isDark,
   required = false,
 }: {
-  label: string
-  value: string
-  onChange: (v: string) => void
-  options: string[]
-  isDark: boolean
-  required?: boolean
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  isDark: boolean;
+  required?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -180,24 +208,43 @@ function SelectInput({
       <div className="relative">
         <select
           value={value}
-          onChange={e => onChange(e.target.value)}
+          onChange={(e) => onChange(e.target.value)}
           required={required}
           className="w-full appearance-none rounded-lg px-4 py-3 text-sm font-body outline-none transition-all duration-200 cursor-pointer"
           style={{
-            background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
-            border: `1px solid ${isDark ? '#2a2a2a' : '#d8d8d8'}`,
-            color: value ? (isDark ? '#f5f5f5' : '#0a0a0a') : (isDark ? '#555' : '#aaa'),
+            background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)",
+            border: `1px solid ${isDark ? "#2a2a2a" : "#d8d8d8"}`,
+            color: value
+              ? isDark
+                ? "#f5f5f5"
+                : "#0a0a0a"
+              : isDark
+                ? "#555"
+                : "#aaa",
           }}
-          onFocus={e => { e.currentTarget.style.borderColor = 'var(--color-brand-green)' }}
-          onBlur={e => { e.currentTarget.style.borderColor = isDark ? '#2a2a2a' : '#d8d8d8' }}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = "var(--color-brand-green)";
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = isDark ? "#2a2a2a" : "#d8d8d8";
+          }}
         >
-          <option value="" disabled>Select your Subject</option>
-          {options.map(o => <option key={o} value={o}>{o}</option>)}
+          <option value="" disabled>
+            Select your Subject
+          </option>
+          {options.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
         </select>
-        <ChevronDown size={14} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+        <ChevronDown
+          size={14}
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none"
+        />
       </div>
     </div>
-  )
+  );
 }
 
 function Textarea({
@@ -208,12 +255,12 @@ function Textarea({
   isDark,
   required = false,
 }: {
-  label: string
-  placeholder: string
-  value: string
-  onChange: (v: string) => void
-  isDark: boolean
-  required?: boolean
+  label: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+  isDark: boolean;
+  required?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -225,39 +272,54 @@ function Textarea({
         placeholder={placeholder}
         value={value}
         required={required}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         rows={5}
         className="w-full rounded-lg px-4 py-3 text-sm font-body text-primary placeholder:text-muted outline-none transition-all duration-200 resize-none"
         style={{
-          background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
-          border: `1px solid ${isDark ? '#2a2a2a' : '#d8d8d8'}`,
+          background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)",
+          border: `1px solid ${isDark ? "#2a2a2a" : "#d8d8d8"}`,
         }}
-        onFocus={e => { e.currentTarget.style.borderColor = 'var(--color-brand-green)' }}
-        onBlur={e => { e.currentTarget.style.borderColor = isDark ? '#2a2a2a' : '#d8d8d8' }}
+        onFocus={(e) => {
+          e.currentTarget.style.borderColor = "var(--color-brand-green)";
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.borderColor = isDark ? "#2a2a2a" : "#d8d8d8";
+        }}
       />
     </div>
-  )
+  );
 }
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function ContactPage() {
-  const { isDark } = useTheme()
-  const { submit, loading } = useFirebaseSubmit('contact_messages')
+  const { isDark } = useTheme();
+  const { submit, loading } = useFirebaseSubmit("contact_messages");
 
   // Form state
   const [form, setForm] = useState({
-    name: '', email: '', phone: '', company: '', subject: '', message: '',
-  })
-  const [submitted, setSubmitted] = useState(false)
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    subject: "",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
 
   const set = (key: keyof typeof form) => (v: string) =>
-    setForm(prev => ({ ...prev, [key]: v }))
+    setForm((prev) => ({ ...prev, [key]: v }));
 
-  const canSubmit = form.name.trim() && form.email.trim() && form.phone.trim() && form.company.trim() && form.subject.trim() && form.message.trim()
+  const canSubmit =
+    form.name.trim() &&
+    form.email.trim() &&
+    form.phone.trim() &&
+    form.company.trim() &&
+    form.subject.trim() &&
+    form.message.trim();
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!canSubmit) return
+    e.preventDefault();
+    if (!canSubmit) return;
     try {
       await submit({
         name: form.name,
@@ -266,32 +328,39 @@ export default function ContactPage() {
         company: form.company,
         subject: form.subject,
         message: form.message,
-      })
-      setSubmitted(true)
+      });
+      setSubmitted(true);
       // Reset form after successful submission
       setTimeout(() => {
-        setForm({ name: '', email: '', phone: '', company: '', subject: '', message: '' })
-        setSubmitted(false)
-      }, 3000)
+        setForm({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          subject: "",
+          message: "",
+        });
+        setSubmitted(false);
+      }, 3000);
     } catch (err) {
-      console.error('Failed to submit form:', err)
+      console.error("Failed to submit form:", err);
     }
-  }
+  };
 
   // Refs for scroll animations
-  const heroRef    = useRef<HTMLDivElement>(null)
-  const emailRef   = useRef<HTMLDivElement>(null)
-  const phoneRef   = useRef<HTMLDivElement>(null)
-  const officeRef  = useRef<HTMLDivElement>(null)
-  const formRef    = useRef<HTMLDivElement>(null)
-  const socialRef  = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLDivElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
+  const officeRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const socialRef = useRef<HTMLDivElement>(null);
 
-  const heroInView   = useInView(heroRef,   { once: true, margin: '-60px' })
-  const emailInView  = useInView(emailRef,  { once: true, margin: '-60px' })
-  const phoneInView  = useInView(phoneRef,  { once: true, margin: '-60px' })
-  const officeInView = useInView(officeRef, { once: true, margin: '-60px' })
-  const formInView   = useInView(formRef,   { once: true, margin: '-60px' })
-  const socialInView = useInView(socialRef, { once: true, margin: '-60px' })
+  const heroInView = useInView(heroRef, { once: true, margin: "-60px" });
+  const emailInView = useInView(emailRef, { once: true, margin: "-60px" });
+  const phoneInView = useInView(phoneRef, { once: true, margin: "-60px" });
+  const officeInView = useInView(officeRef, { once: true, margin: "-60px" });
+  const formInView = useInView(formRef, { once: true, margin: "-60px" });
+  const socialInView = useInView(socialRef, { once: true, margin: "-60px" });
 
   return (
     <>
@@ -647,7 +716,7 @@ export default function ContactPage() {
                         className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl font-display font-semibold text-sm text-primary hover:text-primary transition-all duration-200 disabled:opacity-60 group"
                         style={{
                           border: `1px solid ${isDark ? "#383838" : "#bbb"}`,
-                          cursor: canSubmit ? 'pointer' : 'not-allowed',
+                          cursor: canSubmit ? "pointer" : "not-allowed",
                         }}
                       >
                         {loading ? (

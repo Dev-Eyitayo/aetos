@@ -4,29 +4,42 @@ import { useTheme } from "../../hooks/useTheme";
 
 const footerLinks = {
   Home: [
-    { label: "Benefits", href: "/#services" },
-    { label: "Our Testimonials", href: "/#testimonials" },
-    { label: "Partners", href: "/#partners" },
+    { label: "Contact", href: "/contact" },
+    { label: "Projects", href: "/projects" },
+    // { label: "Mentorship", href: "/enrol" },
+
   ],
   Services: [
-    { label: "Web Development", href: "/services/web" },
-    { label: "Mobile App Development", href: "/services/mobile" },
-    { label: "AI", href: "/services/ai" },
-    { label: "QA testing", href: "/services/qa" },
-    { label: "Code Audit & penetration testing", href: "/services/audit" },
-    { label: "Cloud Computing (AWS)", href: "/services/cloud" },
-    { label: "Maintenance support", href: "/services/maintenance" },
+    { label: "Web Development", href: "/contact" },
+    { label: "Mobile App Development", href: "/contact" },
+    { label: "AI", href: "/contact" },
+    { label: "QA testing", href: "/contact" },
+    { label: "Code Audit & penetration testing", href: "/contact" },
+    { label: "Cloud Computing (AWS)", href: "/contact" },
+    { label: "Maintenance support", href: "/contact" },
   ],
   Careers: [
-    { label: "Internship", href: "/careers" },
-    { label: "Hire Developers", href: "/careers#hire" },
+    { label: "Mentorship", href: "/enrol" },
+    { label: "Hire Developers", href: "/hire" },
   ],
 };
 
 const socials = [
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-  { icon: Twitter, href: "https://twitter.com", label: "Twitter / X" },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/company/aetos-agency-technology/",
+    label: "LinkedIn",
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/aetosagency_atfm?igsh=MXhzc2VvdGV4NWwwaA==",
+    label: "Instagram",
+  },
+  {
+    icon: Twitter,
+    href: "https://x.com/AetosTalent?t=Sj5mBgcHWhP2OQSLqEg74A&s=09",
+    label: "Twitter / X",
+  },
 ];
 
 export default function Footer() {
@@ -43,9 +56,11 @@ export default function Footer() {
         <div className="flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-6">
           {/* Logo */}
           <Link to="/" className="inline-block">
-            <span className="font-display text-3xl font-bold text-primary">
-              ae<span className="text-brand">tos</span>
-            </span>
+            <img
+              src="/logo.png"
+              alt="Aetos"
+              className="h-8 w-auto rounded-2xl object-contain"
+            />
           </Link>
 
           {/* Socials */}
@@ -79,7 +94,10 @@ export default function Footer() {
         {/* Mobile: stacked columns, centered */}
         <div className="flex flex-col items-center gap-8 md:hidden">
           {Object.entries(footerLinks).map(([section, links]) => (
-            <div key={section} className="flex flex-col items-center text-center">
+            <div
+              key={section}
+              className="flex flex-col items-center text-center"
+            >
               <h4 className="font-display font-semibold text-sm text-primary uppercase tracking-wider mb-3">
                 {section}
               </h4>
@@ -127,7 +145,9 @@ export default function Footer() {
                         {link.label}
                       </Link>
                       {i < links.length - 1 && (
-                        <span className="text-muted text-xs select-none">•</span>
+                        <span className="text-muted text-xs select-none">
+                          •
+                        </span>
                       )}
                     </span>
                   ))}
